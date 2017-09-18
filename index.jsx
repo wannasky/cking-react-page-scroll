@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import touch from 'cking-touch/touch';
-import 'index.scss';
+import './index.scss';
 
 export default class PageScroll extends Component {
     constructor(props) {
