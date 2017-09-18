@@ -1,0 +1,16 @@
+{
+  "name": "cking-react-page-scroll",
+  "version": "1.0.0",
+  "description": "react插件，用来实现下拉刷新，上拉到底部加载等功能",
+  "keywords": [
+    "cking",
+    "react",
+    "scroll"
+  ],
+  "author": "wannasky",
+  "license": "MIT",
+  "dependencies":{
+    "cking-touch": "^1.1.1",
+    "react": "^15.6.1"
+  }
+}

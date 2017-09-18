@@ -1,0 +1,139 @@
+@font-face {
+  font-family: "ws-font";
+  src: url('font/iconfont.eot?t=1505704164394');
+  src: url('font/iconfont.eot?t=1505704164394#iefix') format('embedded-opentype'),
+  url('data:application/x-font-woff;charset=utf-8;base64,d09GRgABAAAAAAUcAAsAAAAAB3AAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAABHU1VCAAABCAAAADMAAABCsP6z7U9TLzIAAAE8AAAARAAAAFZW70f7Y21hcAAAAYAAAABcAAABhplkBr5nbHlmAAAB3AAAAUUAAAFUl7UQbWhlYWQAAAMkAAAALwAAADYO6ffIaGhlYQAAA1QAAAAdAAAAJAfeA4hobXR4AAADdAAAAAwAAAAMC+0AAGxvY2EAAAOAAAAACAAAAAgAdgCqbWF4cAAAA4gAAAAfAAAAIAESAF1uYW1lAAADqAAAAUUAAAJtPlT+fXBvc3QAAATwAAAAKgAAADu4IX5deJxjYGRgYOBikGPQYWB0cfMJYeBgYGGAAJAMY05meiJQDMoDyrGAaQ4gZoOIAgCKIwNPAHicY2Bk/sU4gYGVgYOpk+kMAwNDP4RmfM1gxMjBwMDEwMrMgBUEpLmmMDgwVDzjZm7438AQw9zC0AgUZgTJAQAlCAx+eJzFkMENgDAMAy9t6YMyCA8G4sUcnbhrFBPKgwlqybHiWEoUYAGieIgJ7MJ4cMo19yOr+8kzWWoEaiu9q/9UEc2ya1DJTIPNW/3H5nUfnb5CHdSJrbwk3GlHC7t4nA2PvUrDUBhA73fT/DTNTezN303SmCaxuUo10DS2g9guLhYHwclRnXUSugh2UHBwEB/AQQTfwKkP4iSKPoZEczhw5oNEhP6+hKXAkInW0QDtoUOEQOpDouMQYl7muA92LNqupQs85bGcJrmwC24iWU4xKjNXkiUDdFiFYVyMeI45bJcTvAOFEwJ4gX9Eex0qPIDK+OptNcPPYEdpx5hsVfubU6vomspco9Sj9F6RRFHBuGHocO46TbGpStWLaPj2MtrAEWge9w+OSTegJ3flRdhzmwCLBZhBV3+dtv127ZXvmNSTV4jCfJKuWTD/aTFTC7NvVIPr12vhUbhBAeogJMKozEGGdpklkt2GrD6xXHDGQ2c8wAmcES8i1QfrsepdD1qaAafEAotc1k0ZVqtPYWYyZv6+AZcbqpbp1RMBIP+bGjWmAAAAeJxjYGRgYADibecFfOP5bb4ycLMwgMDVp5FPEPT/ehYG5hYgl4OBCSQKAEeZC5QAeJxjYGRgYG7438AQw8LCAARAgpEBFTADAEdtAnAAAAAEAAAAA+kAAAQEAAAAAAAAAHYAqnicY2BkYGBgZghkYGUAASYg5gJCBob/YD4DABD3AXAAeJxlj01OwzAQhV/6B6QSqqhgh+QFYgEo/RGrblhUavdddN+mTpsqiSPHrdQDcB6OwAk4AtyAO/BIJ5s2lsffvHljTwDc4Acejt8t95E9XDI7cg0XuBeuU38QbpBfhJto41W4Rf1N2MczpsJtdGF5g9e4YvaEd2EPHXwI13CNT+E69S/hBvlbuIk7/Aq30PHqwj7mXle4jUcv9sdWL5xeqeVBxaHJIpM5v4KZXu+Sha3S6pxrW8QmU4OgX0lTnWlb3VPs10PnIhVZk6oJqzpJjMqt2erQBRvn8lGvF4kehCblWGP+tsYCjnEFhSUOjDFCGGSIyujoO1Vm9K+xQ8Jee1Y9zed0WxTU/3OFAQL0z1xTurLSeTpPgT1fG1J1dCtuy56UNJFezUkSskJe1rZUQuoBNmVXjhF6XNGJPyhnSP8ACVpuyAAAAHicY2BigAAuBuyAmZGJkZmRhYGxgjexqCi/XDclvzxPNyedgQEAOzEFsgAA') format('woff'),
+  url('font/iconfont.ttf?t=1505704164394') format('truetype'),
+  url('font/iconfont.svg?t=1505704164394#iconfont') format('svg');
+}
+
+$classPrefix:  '.ws';
+
+#{$classPrefix}-page-bg{
+  position: absolute;
+  top:0;
+  left:0;
+  right:0;
+  bottom:0;
+  overflow: hidden;
+  background:#333333;
+
+  #{$classPrefix}-page-mark{
+    text-align: center;
+    position: absolute;
+    left:0;
+    right:0;
+    top: -40px;
+
+
+    #{$classPrefix}-page-mark-direction{
+      display: inline-block;
+      transition: transform 200ms;
+
+      &::before{
+        color:#fff;
+        opacity:0.6;
+        content: '\e60b';
+        font-family: "ws-font";
+        font-size: 20px;
+        font-style:normal;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+    }
+
+    &#{$classPrefix}-direction-rotate{
+
+      #{$classPrefix}-page-mark-direction{
+        transform: rotateZ(180deg);
+      }
+    }
+
+    #{$classPrefix}-page-loading{
+      display: none;
+      margin-top:8px;
+      opacity:0.4;
+
+      span{
+        display: inline-block;
+        width: 10px;
+        height: 10px;margin-right: 3px;
+        transform: scale(0.3);
+        border-radius: 50%;
+        animation: ws-loading 0.4s infinite alternate;
+      }
+
+      .wpl1 {
+        animation-delay: 0;
+      }
+
+      .wpl2 {
+        animation-delay: 0.2s;
+      }
+
+      .wpl3 {
+        animation-delay: 0.4s;
+      }
+    }
+
+    &#{$classPrefix}-show-loading{
+
+      #{$classPrefix}-page-mark-direction{
+        display: none;
+      }
+
+      #{$classPrefix}-page-loading{
+        display: block;
+      }
+    }
+  }
+}
+
+#{$classPrefix}-page-scroll {
+  color:red;
+  position: absolute;
+  top:0;
+  left:0;
+  right:0;
+  bottom:0;
+  overflow: auto;
+  background-color:#fff;
+  transition: transform 0ms ease-in-out;
+
+
+  &::-webkit-scrollbar{
+    width: 0;
+    height: 0;
+  }
+
+  #{$classPrefix}-page-scroll-content{
+
+  }
+
+}
+
+@-webkit-keyframes ws-loading {
+  0% {
+    transform: translateY(0) scale(0.3);
+    opacity: 0;
+  }
+
+  100% {
+    transform: scale(1);
+    background-color: #fff;
+    opacity: 1;
+  }
+}
+
+@keyframes ws-loading {
+  0% {
+    transform: translateY(0) scale(0.3);
+    opacity: 0;
+  }
+
+  100% {
+    transform: scale(1);
+    background-color: #fff;
+    opacity: 1;
+  }
+}
