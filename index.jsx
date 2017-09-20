@@ -34,72 +34,73 @@ export default class PageScroll extends Component {
                 self.props && self.props.onReachTop && self.props.onReachTop(complete);
             }
         }
-        this.dragStart = touch.on(pageScroll,'dragStart',function (event) {
-            if(pageScroll.scrollTop === 0 && event.detail.direction === 'down'){
-                clearTimeout(self.psTimer);
-                pageScroll.style.overflow = 'hidden';
-                pageScroll.style.transitionDuration = '0ms';
-                pageScrollMark.style.transitionDuration = '0ms';
-                pageScrollMark.classList.remove('ws-direction-rotate');
-                dragMove = touch.on(pageScroll,'dragMove',function (event) {
-                    translate = event.detail.y;
-                    pageScroll.style.scrollTop = 0;
-                    if(translate >= self.state.minTranslate){
-                        pageScrollMark.classList.add('ws-direction-rotate');
-                    }else{
-                        pageScrollMark.classList.remove('ws-direction-rotate');
-                    }
-                    if(translate < self.state.maxTranslate){
-                        pageScroll.style.transform = 'translate3d(0,'+translate+'px,0)';
-                        pageScrollMark.style.transform = 'translate3d(0,'+translate+'px,0)';
-                    }
-                });
+        if(self.props && self.props.onPullDownRefresh){
+            this.dragStart = touch.on(pageScroll,'dragStart',function (event) {
+                if(pageScroll.scrollTop === 0 && event.detail.direction === 'down'){
+                    clearTimeout(self.psTimer);
+                    pageScroll.style.overflow = 'hidden';
+                    pageScroll.style.transitionDuration = '0ms';
+                    pageScrollMark.style.transitionDuration = '0ms';
+                    pageScrollMark.classList.remove('ws-direction-rotate');
+                    dragMove = touch.on(pageScroll,'dragMove',function (event) {
+                        translate = event.detail.y;
+                        pageScroll.style.scrollTop = 0;
+                        if(translate >= self.state.minTranslate){
+                            pageScrollMark.classList.add('ws-direction-rotate');
+                        }else{
+                            pageScrollMark.classList.remove('ws-direction-rotate');
+                        }
+                        if(translate < self.state.maxTranslate){
+                            pageScroll.style.transform = 'translate3d(0,'+translate+'px,0)';
+                            pageScrollMark.style.transform = 'translate3d(0,'+translate+'px,0)';
+                        }
+                    });
 
-                dragEnd = touch.on(pageScroll,'dragEnd',function (event) {
-                    translate = event.detail.y;
-                    pageScroll.style.overflow = 'auto';
-                    translate = translate > self.state.maxTranslate ? self.state.maxTranslate : translate;
-                    if(translate < self.state.minTranslate){
-                        pageScroll.style.transitionDuration = '100ms';
-                        pageScroll.style.transform = 'translate3d(0,0,0)';
-                        pageScrollMark.style.transform = 'translate3d(0,0,0)';
-                    }else{
-                        duration = (translate - 50)/speed;
-                        pageScroll.style.transitionDuration = duration + 'ms';
-                        pageScrollMark.style.transitionDuration = duration + 'ms';
-                        pageScroll.style.transform = 'translate3d(0,50px,0)';
-                        pageScrollMark.style.transform = 'translate3d(0,50px,0)';
-
-                        var complete = function () {
-                            duration = 100;
-                            pageScroll.style.transitionDuration = duration + 'ms';
+                    dragEnd = touch.on(pageScroll,'dragEnd',function (event) {
+                        translate = event.detail.y;
+                        pageScroll.style.overflow = 'auto';
+                        translate = translate > self.state.maxTranslate ? self.state.maxTranslate : translate;
+                        if(translate < self.state.minTranslate){
+                            pageScroll.style.transitionDuration = '100ms';
                             pageScroll.style.transform = 'translate3d(0,0,0)';
+                            pageScrollMark.style.transform = 'translate3d(0,0,0)';
+                        }else{
+                            duration = (translate - 50)/speed;
+                            pageScroll.style.transitionDuration = duration + 'ms';
+                            pageScrollMark.style.transitionDuration = duration + 'ms';
+                            pageScroll.style.transform = 'translate3d(0,50px,0)';
+                            pageScrollMark.style.transform = 'translate3d(0,50px,0)';
+
+                            var complete = function () {
+                                duration = 100;
+                                pageScroll.style.transitionDuration = duration + 'ms';
+                                pageScroll.style.transform = 'translate3d(0,0,0)';
+                                self.psTimer = setTimeout(function () {
+                                    pageScroll.style.transitionDuration = '0ms';
+                                    pageScrollMark.style.transitionDuration = '0ms';
+                                    pageScrollMark.classList.remove('ws-direction-rotate');
+                                    pageScrollMark.classList.remove('ws-show-loading');
+                                },110);
+                            }
+
                             self.psTimer = setTimeout(function () {
-                                pageScroll.style.transitionDuration = '0ms';
-                                pageScrollMark.style.transitionDuration = '0ms';
-                                pageScrollMark.classList.remove('ws-direction-rotate');
-                                pageScrollMark.classList.remove('ws-show-loading');
-                            },110);
+                                pageScrollMark.classList.add('ws-show-loading');
+                                self.props && self.props.onPullDownRefresh && self.props.onPullDownRefresh(complete);
+                            },duration + 10);
                         }
 
-                        self.psTimer = setTimeout(function () {
-                            pageScrollMark.classList.add('ws-show-loading');
-                            self.props && self.props.onPullDownRefresh && self.props.onPullDownRefresh(complete);
-                        },duration + 10);
-                    }
+                        dragMove.off();
+                        dragEnd.off();
+                    });
+                }
+            });
+        }
 
-                    dragMove.off();
-                    dragEnd.off();
-                });
-            }
-        });
     }
 
     componentWillUnmount (){
         clearTimeout(this.psTimer);
-        this.dragStart.off();
-        this.dragMove.off();
-        this.dragEnd.off();
+        this.dragStart && this.dragStart.off();
     }
 
     render(){
